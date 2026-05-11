@@ -102,3 +102,13 @@ Desktop.ini
 # Local PDF artifacts
 /assets/
 /public/resumes/
+
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+
+!.env.example
