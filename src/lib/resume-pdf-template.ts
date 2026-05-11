@@ -716,7 +716,7 @@ export async function generatePDFWithPdfLib(data: ResumeData): Promise<{
       throw new Error(`字体文件缺失: ${fontPath}`);
     }
     const fontBytes = fs.readFileSync(fontPath);
-    const font = await pdfDoc.embedFont(fontBytes, { subset: true });
+    const font = await pdfDoc.embedFont(fontBytes, { subset: false });
 
     // 加载 logo
     let logo: PDFImage | null = null;
