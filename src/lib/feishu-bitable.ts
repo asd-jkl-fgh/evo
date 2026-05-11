@@ -85,60 +85,13 @@ export async function uploadPdfToBitable(filename: string, buffer: Buffer): Prom
 }
 
 function buildFields(data: ResumeData, fileToken: string): Record<string, unknown> {
-  const fields: Record<string, unknown> = {
-    '应聘渠道': data.channel_type,
-    '推荐人': data.channel_referrer,
-    '其他渠道说明': data.channel_other,
-    '应聘岗位': data.post,
-    '预计到岗时间': data.entry_date,
-    '岗位性质': data.job_type,
-    '当前状态': data.current_status === '其他' ? data.current_status_other : data.current_status,
-    '目前月薪': data.current_salary,
-    '期望月薪': data.salary_expectation,
-    '姓名（中文）': data.name,
-    '姓名（英文）': data.name_en,
-    '性别': data.sex,
-    '出生日期': data.birthday,
-    '毕业院校': data.school,
-    '最高学历/专业': data.degree,
-    '户籍地': data.household_address,
+  return {
+    '姓名': data.name,
     '手机': data.mobilephone,
-    '电子邮件': data.email,
-    '婚姻状况': data.marriage,
-    '现居住地址': data.living_address,
-    '是否曾患重大疾病': data.has_disease,
-    '是否曾发生劳动纠纷': data.has_dispute,
-    '是否曾被判刑或拘留': data.has_criminal,
-    '性格特点': data.character,
-    '特长': data.speciality,
-    '项目经历': data.project_detail,
-    '工作职责理解': data.job_duty,
-    '职业规划': data.plan,
-    '兴趣爱好': data.hobby,
+    '应聘岗位': data.post,
     '提交时间': Date.now(),
     '简历附件': [{ file_token: fileToken }],
   };
-
-  if (data.education_detail.length > 0) {
-    fields['教育经历'] = data.education_detail
-      .map((edu) => `${edu.start}~${edu.end} ${edu.school} ${edu.major} ${edu.degree}`)
-      .join('\n');
-  }
-  if (data.career_detail.length > 0) {
-    fields['工作经历'] = data.career_detail
-      .map(
-        (work) =>
-          `${work.start}~${work.end} ${work.company} ${work.department} ${work.job} 证明人:${work.reference_name || '无'} 联系方式:${work.reference_contact || '无'}`,
-      )
-      .join('\n');
-  }
-  if (data.family_info.length > 0) {
-    fields['家庭信息'] = data.family_info
-      .map((f) => `${f.name}(${f.relation}) ${f.organ} ${f.work}`)
-      .join('\n');
-  }
-
-  return fields;
 }
 
 export async function createBitableRecord(
